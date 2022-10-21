@@ -37,7 +37,7 @@ const app = {
         thisApp.activatePage(id);
         // change URK hash
 
-        window.location.hash = '#' + id;
+        window.location.hash = '#/' + id;
       });
     }
   },

@@ -4,77 +4,67 @@ import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
 
 const app = {
+  initPages: function () {
+    const thisApp = this;
 
-initPages: function(){
-const thisApp = this;
+    thisApp.pages = document.querySelector(select.containerOf.pages).children;
+    thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
-thisApp.pages = document.querySelector(select.containerOf.pages).children;
-thisApp.navLinks = document.querySelectorAll(select.nav.links);
+    const idFromHash = window.location.hash.replace('#/', '');
 
-const idFromHash = window.location.hash.replace("#/", "")
+    let pageMachingHash = thisApp.pages[0].id;
 
+    for (let page of thisApp.pages) {
+      if (page.id == idFromHash) {
+        pageMachingHash = page.id;
+        break;
+      }
+    }
 
+    thisApp.activatePage(pageMachingHash);
 
-let pageMachingHash = thisApp.pages[0].id;
+    for (let link of thisApp.navLinks) {
+      link.addEventListener('click', function (event) {
+        const clickedElement = this;
+        event.preventDefault();
 
-for(let page of thisApp.pages){
-	if(page.id == idFromHash)
-	{
-		pageMachingHash = page.id;
-		break
-	}
-}
+        // get page ud from href attribute
 
-thisApp.activatePage(pageMachingHash);
+        const id = clickedElement.getAttribute('href').replace('#', '');
 
-for (let link of thisApp.navLinks){
-	link.addEventListener("click", function(event){
-		const clickedElement = this;
-		event.preventDefault();
-		 
-// get page ud from href attribute
+        // run this.App.activeatePage with that id
 
-const id = clickedElement.getAttribute("href").replace("#", "");
+        thisApp.activatePage(id);
+        // change URK hash
 
-// run this.App.activeatePage with that id
+        window.location.hash = '#' + id;
+      });
+    }
+  },
 
-thisApp.activatePage(id);
-// change URK hash
+  activatePage: function (pageId) {
+    const thisApp = this;
 
-window.location.hash = "#" + id;
+    // add class active to matchin oages, remove fro non-matching
 
-	})
-}
-
-
-
-	},
-
-	activatePage: function(pageId){
-const thisApp = this;
-
-// add class active to matchin oages, remove fro non-matching
-
-for(let page of thisApp.pages){
-/*	if(page.id == pageId){
+    for (let page of thisApp.pages) {
+      /*	if(page.id == pageId){
 		page.classList.add(classNames.pages.active)
 	} else {
 		page.classList.remove(classNames.pages.active)
 
 	} */
-	page.classList.toggle(classNames.pages.active, page.id == pageId)
-}
+      page.classList.toggle(classNames.pages.active, page.id == pageId);
+    }
 
-for(let link of thisApp.navLinks){
-	link.classList.toggle(
-		classNames.nav.active,
-		link.getAttribute("href") == "#" + pageId
-	);
-}
+    for (let link of thisApp.navLinks) {
+      link.classList.toggle(
+        classNames.nav.active,
+        link.getAttribute('href') == '#' + pageId
+      );
+    }
+  },
 
-},
-
-	
   initMenu: function () {
     const thisApp = this;
     // console.log('this App', thisApp);
@@ -115,9 +105,8 @@ for(let link of thisApp.navLinks){
 
     thisApp.initData();
     thisApp.initCart();
-	thisApp.initPages();
-	thisApp.initBooking();
-
+    thisApp.initPages();
+    thisApp.initBooking();
   },
   initCart: function () {
     const thisApp = this;
@@ -131,12 +120,10 @@ for(let link of thisApp.navLinks){
       app.cart.add(event.detail.product);
     });
   },
-  initBooking: function(){
+  initBooking: function () {
     const thisApp = this;
     const bookingContainer = document.querySelector(select.containerOf.booking);
     thisApp.booking = new Booking(bookingContainer);
   },
-
-  
 };
 app.init();

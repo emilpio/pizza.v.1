@@ -81,6 +81,7 @@ export const select = {
   home: {
     homeLinks: '.home-button',
   },
+  
 };
 
 export const classNames = {
@@ -114,6 +115,7 @@ export const settings = {
     orders: 'orders',
     product: 'product',
     order: 'order',
+    home: 'home',
     bookings: 'bookings',
     events: 'events',
     dateStartParamKey: 'date_gte',

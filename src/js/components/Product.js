@@ -84,8 +84,10 @@ class Product {
       // console.log('find activ' + findActiveProduct);
 
       /* if there is active product and it's not thisProduct.element, remove class active from it */
-      if (findActiveProduct == false)
-        findActiveProduct.classList.remove('active');
+     if (
+        findActiveProduct !== thisProduct.element &&
+        findActiveProduct != null
+      )
       /* toggle active class on thisProduct.element */
       thisProduct.element.classList.toggle('active');
     });

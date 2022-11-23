@@ -88,6 +88,7 @@ class Product {
         findActiveProduct !== thisProduct.element &&
         findActiveProduct != null
       )
+       findActiveProduct.classList.remove('active');
       /* toggle active class on thisProduct.element */
       thisProduct.element.classList.toggle('active');
     });
